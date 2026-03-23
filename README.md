@@ -17,8 +17,8 @@ A proposta é entender como o trabalho remoto impactou a produtividade, preferê
 
 ## Integrantes do Grupo
 - Nome 1  
-- Nome 2  
-- Nome 3  Christian Neis Rodrigues
+- João Vitor Cândido de Andrade  
+- Christian Neis Rodrigues
 - Nome 4  
 - Nome 5  
 - Nome 6  
