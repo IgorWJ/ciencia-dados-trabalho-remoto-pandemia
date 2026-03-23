@@ -24,7 +24,7 @@ A proposta é entender como o trabalho remoto impactou a produtividade, preferê
 
 ## Link do Trello
 Acesso ao quadro do projeto:  
-https://trello.com/invite/b/69a8a83d30e71f6c46aa708c/ATTI3f9fddcd2e08ec4e89cead6954a1378cC49058B8/analise-inteligente-de-dados-de-vendas-online
+https://trello.com/invite/b/69a8a83d30e71f6c46aa708c/ATTI3f9fddcd2e08ec4e89cead6954a1378cC49058B8/analise-trabalho-remoto-na-pandemia
 
 ---
 
