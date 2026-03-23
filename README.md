@@ -16,7 +16,7 @@ A proposta é entender como o trabalho remoto impactou a produtividade, preferê
 ---
 
 ## Integrantes do Grupo
-- Nome Igor Werneck Jacobosque  
+- Igor Werneck Jacobosque  
 - João Vitor Cândido de Andrade  
 - Christian Neis Rodrigues 
 
