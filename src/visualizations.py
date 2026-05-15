@@ -143,7 +143,7 @@ def plot_preferencia_futura(df):
 def main():
     """Função principal"""
     print("="*80)
-    print("📊 GERANDO VISUALIZAÇÕES")
+    print("GERANDO VISUALIZAÇÕES")
     print("="*80)
     
     df = load_data()
@@ -155,8 +155,8 @@ def main():
     plot_preferencia_futura(df)
     
     print("\n" + "="*80)
-    print("✅ TODAS AS VISUALIZAÇÕES GERADAS COM SUCESSO")
-    print(f"📁 Salvas em: {VIZ_PATH}")
+    print("TODAS AS VISUALIZAÇÕES GERADAS COM SUCESSO")
+    print(f"Salvas em: {VIZ_PATH}")
     print("="*80)
 
 if __name__ == "__main__":

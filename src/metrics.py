@@ -161,7 +161,7 @@ def analisar_preferencia_futura(df):
     return preferencia_futura
 
 def main():
-    """Função principal"""
+    """Função principal - calcula todas as 5 métricas de análise"""
     df = load_data()
     
     # Calcular todas as métricas
@@ -172,7 +172,7 @@ def main():
     preferencia = analisar_preferencia_futura(df)
     
     print("\n" + "="*80)
-    print("MÉTRICAS CALCULADAS COM SUCESSO")
+    print("✅ TODAS AS MÉTRICAS CALCULADAS COM SUCESSO")
     print("="*80)
     
     return {

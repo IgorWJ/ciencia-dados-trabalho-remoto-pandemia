@@ -1,0 +1,82 @@
+# Ambiente Virtual Python
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribuição / Empacotamento
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+.env.local
+
+# Streamlit
+.streamlit/
+
+# Cache
+.cache/
+*.cache
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+
+# Temporários
+temp/
+tmp/
+*.tmp
+
+# Dados sensíveis
+credentials.json
+secrets.toml
+config_local.py
+
+# Visualizações (se quiser versioná-las, remover esta linha)
+# visualizations/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Editor local
+.flake8
+.pylintrc
