@@ -138,30 +138,35 @@ ciencia-dados-trabalho-remoto-pandemia/
 
 ## Como Executar o Projeto
 
-### 1. Ativar o Ambiente Virtual
+### 1. Criar o Ambiente Virtual
+```bash
+python -m venv .venv
+```
+
+### 2. Ativar o Ambiente Virtual
 ```bash
 .\.venv\Scripts\activate
 ```
 
-### 2. Instalar Dependências
+### 3. Instalar Dependências
 ```bash
 pip install pandas matplotlib seaborn streamlit numpy
 ```
 
-### 3. Executar Tradução do Dataset (Primeiro Uso)
+### 4. Executar Tradução do Dataset (Primeiro Uso)
 ```bash
 python src/traducao.py
 ```
 Isso criará o arquivo `Dataset_PT.csv` com todos os dados traduzidos para português.
 
-### 4. Rodar o Dashboard Streamlit
+### 5. Rodar o Dashboard Streamlit
 ```bash
 streamlit run app/dashboard.py
 ```
 
 O dashboard estará disponível em: **http://localhost:8501**
 
-### 5. (Opcional) Gerar Visualizações PNG Estáticas
+### 6. (Opcional) Gerar Visualizações PNG Estáticas
 ```bash
 python src/visualizations.py
 ```
