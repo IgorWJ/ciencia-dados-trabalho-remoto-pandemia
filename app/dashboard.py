@@ -34,7 +34,8 @@ def get_coluna(df, texto, excluir=None):
         if texto in c and not any(x in c for x in excluir):
             return c
 
-    raise ValueError(f"Coluna não encontrada para: {texto}")
+    st.error(f"Coluna não encontrada: {texto}")
+    st.stop()
 
 # CARREGAMENTO DE DADOS
 
@@ -44,29 +45,63 @@ DATA_PATH = BASE_PATH / "data"
 @st.cache_data
 def load_data():
     """Carrega dataset traduzido"""
-    df = pd.read_csv(DATA_PATH / "Dataset_PT.csv", encoding='utf-8')
+    df = pd.read_csv(
+        DATA_PATH / "Dataset_PT.csv",
+        encoding="utf-8"
+    )
     return df
+
 
 # Carregar dados
 df = load_data()
 
-# Filtros Globais
+# SIDEBAR
 
-st.sidebar.markdown("## Filtros Globais")
+st.sidebar.title("Navegação")
 
-filtro_linhas = st.sidebar.slider(
-    "Quantidade máxima de registros",
+st.sidebar.markdown("## Configurações")
+
+amostra = st.sidebar.slider(
+    "Quantidade de registros exibidos",
     min_value=500,
     max_value=len(df),
     value=len(df),
     step=500
 )
 
-df = df.head(filtro_linhas)
+df = df.head(amostra)
 
 mostrar_graficos_interativos = st.sidebar.toggle(
     "Ativar gráficos interativos (Plotly)",
     value=True
+)
+
+st.sidebar.markdown("---")
+
+st.sidebar.info(
+    """
+### Sobre este Projeto
+
+Dashboard analítico desenvolvido em Streamlit para análise dos impactos do trabalho remoto durante a pandemia de COVID-19.
+
+### Tecnologias
+- Python
+- Streamlit
+- Pandas
+- Plotly
+- Seaborn
+
+### Dataset
+- 3.019 respondentes
+- 73 variáveis
+- Dados coletados entre 2020–2021
+"""
+)
+
+st.sidebar.markdown("---")
+
+st.sidebar.caption(
+    "Projeto acadêmico de Ciência de Dados com foco em análise exploratória, visualização de dados e storytelling analítico."
 )
 
 # CSS CUSTOMIZADO
@@ -86,9 +121,10 @@ h2 {
 
 .insight-box {
     background: #ecf0f1;
+    color: #2c3e50;
     padding: 15px;
-    border-left: 4px solid #3498db;
-    border-radius: 5px;
+    border-left: 5px solid #3498db;
+    border-radius: 8px;
     margin-top: 15px;
 }
 
@@ -98,7 +134,11 @@ h2 {
 # TITULO 
 
 st.title("Análise: Trabalho Remoto na Pandemia (2020-2021)")
-st.markdown("Versão Traduzida com Contexto Completo | 3.019 Respondentes | 73 Variáveis")
+
+st.markdown(
+    "Versão traduzida com contexto completo | 3.019 Respondentes | 73 Variáveis"
+)
+
 st.markdown("---")
 
 # SIDEBAR MENU
@@ -116,28 +156,6 @@ pagina = st.sidebar.radio(
     ]
 )
 
-st.sidebar.markdown("---")
-
-st.sidebar.info(
-    """
-**Sobre este Projeto**
-
-Dashboard analítico desenvolvido em Streamlit para análise dos impactos do trabalho remoto durante a pandemia de COVID-19.
-
-### Tecnologias
-- Python
-- Streamlit
-- Pandas
-- Plotly
-- Seaborn
-
-### Dataset
-- 3.019 respondentes
-- 73 variáveis
-- Dados coletados entre 2020–2021
-"""
-)
-
 # ============================================================================
 # PÁGINA 1: RESUMO EXECUTIVO
 # ============================================================================
@@ -153,8 +171,8 @@ Esta pesquisa analisou como essa mudança impactou produtividade, motivação, b
 
     col1, col2, col3, col4 = st.columns(4)
 
-    col1.metric("Respondentes", "3.019")
-    col2.metric("Variáveis", "73")
+    col1.metric("Respondentes", f"{len(df):,}")
+    col2.metric("Variáveis", len(df.columns))
     col3.metric("Escopo", "Global")
     col4.metric("Período", "2020–2021")
 
@@ -170,13 +188,14 @@ Esta pesquisa analisou como essa mudança impactou produtividade, motivação, b
 ### Produtividade
 
 - Grande parte dos participantes relatou produtividade igual ou superior ao trabalho presencial.
-- O trabalho remoto não demonstrou queda significativa generalizada de desempenho.
-- Muitos trabalhadores relataram maior foco em casa.
+- Muitos profissionais relataram maior foco durante o home office.
+- Não houve percepção generalizada de queda de desempenho.
 
 ### Barreiras
 
 - Falta de motivação apareceu como principal obstáculo.
-- Isolamento social e colaboração remota também foram desafios frequentes.
+- Isolamento social foi recorrente.
+- Comunicação e colaboração remota foram desafios relevantes.
 """)
 
     with col2:
@@ -195,6 +214,13 @@ Esta pesquisa analisou como essa mudança impactou produtividade, motivação, b
 """)
 
     st.markdown("---")
+
+    st.subheader("Visualização do Dataset")
+
+    st.dataframe(
+    df.head(),
+    use_container_width=True
+)
 
     st.markdown("""
 <div class="insight-box">
@@ -220,26 +246,29 @@ elif pagina == "Insights Automáticos":
 Esta seção reúne descobertas automáticas identificadas a partir da análise dos dados.
 """)
 
-    insights = [
-        "Existe forte preferência por modelos híbridos de trabalho.",
-        "Equilíbrio entre vida pessoal e profissional foi o benefício mais citado.",
-        "Falta de motivação apareceu como principal obstáculo ao home office.",
-        "A produtividade foi percebida como neutra ou positiva pela maioria.",
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.success(
+            "Equilíbrio entre vida pessoal e profissional foi o benefício mais citado."
+        )
+
+        st.info(
+            "Existe forte preferência por modelos híbridos de trabalho."
+        )
+
+    with col2:
+        st.warning(
+            "Falta de motivação apareceu como principal obstáculo ao home office."
+        )
+
+        st.success(
+            "A produtividade foi percebida como neutra ou positiva pela maioria."
+        )
+
+    st.info(
         "Muitos profissionais desejam continuar trabalhando remotamente após a pandemia."
-    ]
-
-    for insight in insights:
-        st.success(insight)
-
-    st.markdown("---")
-
-    st.subheader("Resumo Estatístico")
-
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("Respondentes", "3.019")
-    col2.metric("Variáveis", "73")
-    col3.metric("Período", "2020–2021")
+    )
 
 # ============================================================================
 # PÁGINA 3: ADOÇÃO DO TRABALHO REMOTO
@@ -249,13 +278,17 @@ elif pagina == "Adoção do Trabalho Remoto":
 
     st.header("Adoção do Trabalho Remoto")
 
-    st.markdown("""
-Comparação entre o tempo remoto efetivamente realizado
-e o tempo remoto desejado pelos trabalhadores.
-""")
+    col_real = get_coluna(
+        df,
+        "Thinking about your current job",
+        ["2020"]
+    )
 
-    col_real = get_coluna(df, "Thinking about your current job", ["2020"])
-    col_pref = get_coluna(df, "How much of your time would you have preferred", ["last 3"])
+    col_pref = get_coluna(
+        df,
+        "How much of your time would you have preferred",
+        ["last 3"]
+    )
 
     real = df[col_real].value_counts().head(10)
     pref = df[col_pref].value_counts().head(10)
@@ -263,35 +296,59 @@ e o tempo remoto desejado pelos trabalhadores.
     col1, col2 = st.columns(2)
 
     with col1:
+
         st.subheader("Tempo Real")
+
+        real_df = real.reset_index()
+        real_df.columns = ["Categoria", "Quantidade"]
 
         if mostrar_graficos_interativos:
 
             fig = px.bar(
-                real,
+                real_df,
+                x="Quantidade",
+                y="Categoria",
                 orientation="h",
-                title="Tempo Real Trabalhado Remotamente"
+                text="Quantidade",
+                color="Quantidade",
+                title="Tempo Real Trabalhado Remotamente",
+                template="plotly_white"
             )
+
+            fig.update_layout(height=600)
 
             st.plotly_chart(fig, use_container_width=True)
 
         else:
+
             st.bar_chart(real)
 
     with col2:
+
         st.subheader("Tempo Preferido")
+
+        pref_df = pref.reset_index()
+        pref_df.columns = ["Categoria", "Quantidade"]
 
         if mostrar_graficos_interativos:
 
             fig = px.bar(
-                pref,
+                pref_df,
+                x="Quantidade",
+                y="Categoria",
                 orientation="h",
-                title="Tempo Preferido de Trabalho Remoto"
+                text="Quantidade",
+                color="Quantidade",
+                title="Tempo Preferido de Trabalho Remoto",
+                template="plotly_white"
             )
+
+            fig.update_layout(height=600)
 
             st.plotly_chart(fig, use_container_width=True)
 
         else:
+
             st.bar_chart(pref)
 
     st.markdown("""
@@ -313,21 +370,35 @@ elif pagina == "Produtividade Percebida":
 
     st.header("Produtividade Percebida")
 
-    col_prod = get_coluna(df, "Roughly how productive are you")
+    col_prod = get_coluna(
+        df,
+        "Roughly how productive are you"
+    )
 
     prod = df[col_prod].value_counts().head(10)
+
+    prod_df = prod.reset_index()
+    prod_df.columns = ["Categoria", "Quantidade"]
 
     if mostrar_graficos_interativos:
 
         fig = px.bar(
-            prod,
+            prod_df,
+            x="Quantidade",
+            y="Categoria",
             orientation="h",
-            title="Percepção de Produtividade"
+            text="Quantidade",
+            color="Quantidade",
+            title="Percepção de Produtividade",
+            template="plotly_white"
         )
+
+        fig.update_layout(height=600)
 
         st.plotly_chart(fig, use_container_width=True)
 
     else:
+
         st.bar_chart(prod)
 
     st.markdown("""
@@ -380,7 +451,8 @@ Principais obstáculos enfrentados pelos trabalhadores durante o trabalho remoto
             orientation="h",
             text="Frequência",
             color="Frequência",
-            title="Principais Barreiras ao Trabalho Remoto"
+            title="Principais Barreiras ao Trabalho Remoto",
+            template="plotly_white"
         )
 
         fig.update_layout(height=700)
@@ -429,6 +501,7 @@ Aspectos positivos mais valorizados pelos trabalhadores durante a pandemia.
     lista = []
 
     for c in cols:
+
         lista.extend(df[c].dropna().tolist())
 
     df_ben = pd.DataFrame(
@@ -436,7 +509,10 @@ Aspectos positivos mais valorizados pelos trabalhadores durante a pandemia.
         columns=["Benefício", "Frequência"]
     )
 
-    df_ben = df_ben.sort_values("Frequência", ascending=False)
+    df_ben = df_ben.sort_values(
+        "Frequência",
+        ascending=False
+    )
 
     top = df_ben.head(10)
 
@@ -449,8 +525,11 @@ Aspectos positivos mais valorizados pelos trabalhadores durante a pandemia.
             orientation="h",
             text="Frequência",
             color="Frequência",
-            title="Benefícios Mais Valorizados"
+            title="Benefícios Mais Valorizados",
+            template="plotly_white"
         )
+
+        fig.update_layout(height=600)
 
         st.plotly_chart(fig, use_container_width=True)
 
@@ -486,13 +565,24 @@ Preferências futuras dos trabalhadores após o período crítico da pandemia.
 
     pref = df[col].value_counts().head(10)
 
+    pref_df = pref.reset_index()
+    pref_df.columns = ["Categoria", "Quantidade"]
+
     if mostrar_graficos_interativos:
 
         fig = px.bar(
-            pref,
+            pref_df,
+            x="Quantidade",
+            y="Categoria",
             orientation="h",
-            title="Preferências Futuras de Trabalho Remoto"
+            text="Quantidade",
+            color="Quantidade",
+            title="Preferências Futuras de Trabalho Remoto",
+            template="plotly_white"
+            
         )
+
+        fig.update_layout(height=600)
 
         st.plotly_chart(fig, use_container_width=True)
 
@@ -512,6 +602,7 @@ Isso sugere mudanças estruturais permanentes no mercado de trabalho.
 
 </div>
 """, unsafe_allow_html=True)
+
 # ============================================================================
 # RODAPÉ
 # ============================================================================
@@ -522,6 +613,8 @@ st.markdown("""
 <div style='text-align: center; color: gray;'>
 
 Dashboard Interativo de Ciência de Dados<br>
+Análise do Trabalho Remoto na Pandemia (2020–2021)<br><br>
+
 Desenvolvido com Streamlit, Pandas, Plotly e Seaborn
 
 </div>
