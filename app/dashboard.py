@@ -24,13 +24,19 @@ st.set_page_config(
 
 # Estilo customizado
 sns.set_theme(style="whitegrid", palette="husl")
-plt.rcParams.update({
-    'figure.figsize': (15, 8),
-    'font.size': 11,
-    'axes.titlesize': 13,
-    'axes.labelsize': 11,
-    'lines.linewidth': 2,
-})
+
+# ============================================================================
+# FUNÇÃO AUXILIAR 
+# ============================================================================
+def get_coluna(df, texto, excluir=None):
+    if excluir is None:
+        excluir = []
+
+    for c in df.columns:
+        if texto in c and not any(x in c for x in excluir):
+            return c
+
+    raise ValueError(f"Coluna não encontrada para: {texto}")
 
 BASE_PATH = Path(__file__).parent.parent
 DATA_PATH = BASE_PATH / "data"
