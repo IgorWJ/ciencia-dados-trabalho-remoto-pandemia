@@ -367,82 +367,50 @@ elif pagina == "💼 Produtividade Percebida":
 # PÁGINA 4: BARREIRAS
 # ============================================================================
 elif pagina == "🚧 Principais Barreiras":
-    st.header("Barreiras ao Trabalho Remoto Efetivo")
-    
-    st.markdown("""
-    ### Obstáculos Enfrentados
-    
-    Os respondentes foram perguntados: **"Qual é a barreira mais significativa para você 
-    ao trabalhar remotamente?"** (pergunta formulada 10 vezes com diferentes opções).
-    """)
-    
-    cols_barreiras = [col for col in df.columns if "most significant barrier" in col]
-    
-    barreiras_list = []
-    for col in cols_barreiras:
-        barreiras_col = df[col].dropna()
-        barreiras_list.extend(barreiras_col.tolist())
-    
-    barreiras_contador = Counter(barreiras_list)
-    barreiras_df = pd.DataFrame(
-        barreiras_contador.items(),
-        columns=['Barreira', 'Frequência']
-    ).sort_values('Frequência', ascending=False)
-    
-    barreiras_df = barreiras_df[~barreiras_df['Barreira'].isin(['Não aplicável', '8', 'Não', ''])]
-    
-    st.metric("Total de Menções de Barreiras", f"{len(barreiras_list):,}")
-    
-    st.markdown("---")
-    
-    # Slider
-    n_barreiras = st.slider("Quantas barreiras exibir?", 5, 15, 10, step=1)
-    
-    st.subheader(f"🔴 Top {n_barreiras} Barreiras Mais Mencionadas")
-    
-    fig, ax = plt.subplots(figsize=(15, 10))
-    barreiras_top = barreiras_df.head(n_barreiras).sort_values('Frequência')
-    cores_bar = sns.color_palette("Reds_r", len(barreiras_top))
-    barreiras_top.plot(
-        kind='barh', 
-        y='Frequência', 
-        ax=ax, 
-        color=cores_bar,
-        legend=False
-    )
-    ax.set_xlabel('Número de Menções', fontweight='bold', fontsize=11)
-    ax.set_ylabel('')
-    ax.set_title(f'Principais Barreiras ao Trabalho Remoto - Top {n_barreiras}\n(Quanto maior, mais significativo o obstáculo)', 
-                 fontweight='bold', fontsize=12, pad=20)
-    
-    # Adicionar valores
-    for i, v in enumerate(barreiras_top['Frequência']):
-        ax.text(v + 50, i, str(int(v)), va='center', fontweight='bold', fontsize=10)
-    
-    sns.despine(left=True)
-    plt.tight_layout()
-    st.pyplot(fig)
-    
-    # Top 5 com destaque
-    st.markdown("---")
-    st.subheader("🎯 Top 5 Barreiras Críticas")
-    
-    for idx, row in barreiras_df.head(5).iterrows():
-        pct = (row['Frequência'] / barreiras_df['Frequência'].max()) * 100
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            st.progress(pct / 100)
-            st.write(f"**{idx + 1}. {row['Barreira']}**")
-        with col2:
-            st.write(f"**{int(row['Frequência'])}** menções")
-    
-    st.markdown("""
-    <div class="insight-box">
-    💡 **Insight**: A "Falta de Motivação" é a barreira mais significativa (2.211 menções), 
-    seguida por dificuldades técnicas e psicossociais. Isso sugere que o desafio não é apenas 
-    tecnológico, mas também emocional e motivacional.
-    </div>
-    """, unsafe_allow_html=True)
+
+    st.header("Principais Barreiras")
+
+    cols = [c for c in df.columns if "barrier" in c]
+
+    lista = []
+    for c in cols:
+        lista.extend(df[c].dropna().tolist())
+
+    df_bar = pd.DataFrame(Counter(lista).items(), columns=["Barreira", "Frequência"])
+    df_bar = df_bar.sort_values("Frequência", ascending=False)
+
+    n = st.slider("Quantas barreiras?", 5, 15, 10)
+
+    top = df_bar.head(n)
+
+    # ================================
+    # PLOTLY TOGGLE
+    # ================================
+    if mostrar_graficos_interativos:
+
+        fig = px.bar(
+            top,
+            x="Frequência",
+            y="Barreira",
+            orientation="h",
+            text="Frequência",
+            color="Frequência",
+            title="Principais Barreiras"
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+    else:
+
+        fig, ax = plt.subplots()
+        top.sort_values("Frequência").plot(
+            kind="barh",
+            x="Barreira",
+            y="Frequência",
+            ax=ax
+        )
+
+        st.pyplot(fig)
 
 # ============================================================================
 # PÁGINA 5: BENEFÍCIOS
