@@ -38,6 +38,10 @@ def get_coluna(df, texto, excluir=None):
 
     raise ValueError(f"Coluna não encontrada para: {texto}")
 
+# ============================================================================
+# CARREGAMENTO DE DADOS
+# ============================================================================
+
 BASE_PATH = Path(__file__).parent.parent
 DATA_PATH = BASE_PATH / "data"
 
@@ -71,38 +75,38 @@ mostrar_graficos_interativos = st.sidebar.toggle(
 
 # CSS customizado
 st.markdown("""
-    <style>
-    h1 { color: #2c3e50; text-align: center; margin-bottom: 30px; }
-    h2 { color: #34495e; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
-    .insight-box { background: #ecf0f1; padding: 15px; border-left: 4px solid #3498db; border-radius: 5px; }
-    .resultado-bom { color: #27ae60; font-weight: bold; }
-    .resultado-neutro { color: #e67e22; font-weight: bold; }
-    .resultado-ruim { color: #e74c3c; font-weight: bold; }
-    </style>
+<style>
+h1 { text-align: center; color: #2c3e50; }
+h2 { border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+.insight-box {
+    background: #ecf0f1;
+    padding: 15px;
+    border-left: 4px solid #3498db;
+    border-radius: 5px;
+}
+</style>
 """, unsafe_allow_html=True)
-
 # ============================================================================
-# TITULO E SIDEBAR
+# TITULO 
 # ============================================================================
 st.title("📊 Análise: Trabalho Remoto na Pandemia (2020-2021)")
 st.markdown("Versão Traduzida com Contexto Completo | 3.019 Respondentes | 73 Variáveis")
 st.markdown("---")
 
-st.sidebar.title("📋 Navegação")
+# ============================================================================
+# SIDEBAR MENU
+# ============================================================================
 pagina = st.sidebar.radio(
     "Escolha uma seção:",
-    ["📈 Resumo Executivo", "👥 Adoção do Trabalho Remoto", "💼 Produtividade Percebida", 
-     "🚧 Principais Barreiras", "✨ Benefícios Identificados", "🔮 Perspectiva Pós-Pandemia"]
-)
-
-st.sidebar.markdown("---")
-st.sidebar.info(
-    "📌 **Sobre este Projeto**\n\n"
-    "Análise acadêmica de ciência de dados sobre o impacto do trabalho remoto durante COVID-19.\n\n"
-    "📊 **Dados:**\n"
-    "• Respondentes: 3.019\n"
-    "• Variáveis: 73\n"
-    "• Período: 2020-2021"
+    [
+        "📈 Resumo Executivo",
+        "🧠 Insights Automáticos",
+        "👥 Adoção do Trabalho Remoto",
+        "💼 Produtividade Percebida",
+        "🚧 Principais Barreiras",
+        "✨ Benefícios Identificados",
+        "🔮 Perspectiva Pós-Pandemia"
+    ]
 )
 
 # ============================================================================
