@@ -44,11 +44,24 @@ def load_data():
 # Carregar dados
 df = load_data()
 
-# Cache de colunas importantes
-col_real = [c for c in df.columns if 'Thinking about your current job' in c and '2020' not in c][0]
-col_pref = [c for c in df.columns if 'How much of your time would you have preferred' in c and 'last 3' not in c][0]
-col_prod = [c for c in df.columns if 'Roughly how productive are you' in c][0]
-col_futuro = [c for c in df.columns if 'Imagine that COVID-19' in c][0]
+# Filtros Globais
+
+st.sidebar.markdown("## 🎛️ Filtros Globais")
+
+filtro_linhas = st.sidebar.slider(
+    "Quantidade máxima de registros",
+    min_value=500,
+    max_value=len(df),
+    value=len(df),
+    step=500
+)
+
+df = df.head(filtro_linhas)
+
+mostrar_graficos_interativos = st.sidebar.toggle(
+    "Ativar gráficos interativos (Plotly)",
+    value=True
+)
 
 # CSS customizado
 st.markdown("""
