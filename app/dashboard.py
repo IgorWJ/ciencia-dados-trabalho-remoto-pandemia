@@ -56,7 +56,7 @@ df = load_data()
 
 # Filtros Globais
 
-st.sidebar.markdown("## 🎛️ Filtros Globais")
+st.sidebar.markdown("## Filtros Globais")
 
 filtro_linhas = st.sidebar.slider(
     "Quantidade máxima de registros",
@@ -89,7 +89,7 @@ h2 { border-bottom: 2px solid #3498db; padding-bottom: 5px; }
 # ============================================================================
 # TITULO 
 # ============================================================================
-st.title("📊 Análise: Trabalho Remoto na Pandemia (2020-2021)")
+st.title(" Análise: Trabalho Remoto na Pandemia (2020-2021)")
 st.markdown("Versão Traduzida com Contexto Completo | 3.019 Respondentes | 73 Variáveis")
 st.markdown("---")
 
@@ -99,20 +99,20 @@ st.markdown("---")
 pagina = st.sidebar.radio(
     "Escolha uma seção:",
     [
-        "📈 Resumo Executivo",
-        "🧠 Insights Automáticos",
-        "👥 Adoção do Trabalho Remoto",
-        "💼 Produtividade Percebida",
-        "🚧 Principais Barreiras",
-        "✨ Benefícios Identificados",
-        "🔮 Perspectiva Pós-Pandemia"
+        "Resumo Executivo",
+        "Insights Automáticos",
+        "Adoção do Trabalho Remoto",
+        "Produtividade Percebida",
+        "Principais Barreiras",
+        "Benefícios Identificados",
+        "Perspectiva Pós-Pandemia"
     ]
 )
 
 # ============================================================================
 # PÁGINA 1: RESUMO EXECUTIVO
 # ============================================================================
-if pagina == "📈 Resumo Executivo":
+if pagina == "Resumo Executivo":
     st.header("Resumo Executivo da Pesquisa")
     
     st.markdown("""
@@ -124,78 +124,43 @@ if pagina == "📈 Resumo Executivo":
     """)
     
     col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("👥 Respondentes", "3.019")
-    with col2:
-        st.metric("📋 Variáveis", "73")
-    with col3:
-        st.metric("🌍 Regiões", "Metropolitana + Regional")
-    with col4:
-        st.metric("📅 Período", "2020-2021")
-    
+
+    col1.metric("Respondentes", "3.019")
+    col2.metric("Variáveis", "73")
+    col3.metric("Regiões", "Global")
+    col4.metric("Período", "2020-2021")
+
+# ============================================================================
+# PÁGINA 2 - INSIGHTS AUTOMÁTICOS
+# ============================================================================
+
+elif pagina == "🧠 Insights Automáticos":
+
+    st.header("Insights Automáticos")
+
+    insights = [
+        "📌 Forte preferência por modelos híbridos",
+        "📌 Equilíbrio vida-trabalho é o maior benefício",
+        "📌 Falta de motivação é principal barreira",
+        "📌 Produtividade foi neutra ou positiva para maioria",
+        "📌 Trabalho remoto veio para ficar"
+    ]
+
+    for i in insights:
+        st.success(i)
+
     st.markdown("---")
-    
-    st.subheader("🎯 Principais Descobertas")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        #### 1️⃣ Produtividade
-        - **34%** percebem produtividade **positiva** trabalhando remotamente
-        - **34%** relatam produtividade **igual** ao presencial
-        - **32%** percebem produtividade **reduzida**
-        
-        #### 2️⃣ Principal Desafio
-        - **Falta de motivação** é citada 2.211 vezes
-        - Seguida por dificuldade em colaborar (1.763)
-        - E sentimento de isolamento (1.561)
-        """)
-    
-    with col2:
-        st.markdown("""
-        #### 3️⃣ Maior Benefício
-        - **Equilíbrio vida-trabalho** é citado 1.829 vezes
-        - Economia de tempo com deslocamento (1.485)
-        - Melhor gestão de compromissos pessoais (1.082)
-        
-        #### 4️⃣ Futuro do Trabalho
-        - **36%** querem continuar trabalhando remotamente
-        - Indica mudança estrutural e duradoura
-        - Demanda por modelos híbridos crescente
-        """)
-    
-    st.markdown("---")
-    
-    st.subheader("📊 Lacuna Entre Realidade e Preferência")
-    
-    # Calcular essa métrica
-    col_real = [c for c in df.columns if 'Thinking about your current job' in c and '2020' not in c][0]
-    col_pref = [c for c in df.columns if 'How much of your time would you have preferred' in c and 'last 3' not in c][0]
-    
-    dados_real = df[col_real].value_counts()
-    dados_pref = df[col_pref].value_counts()
-    
+
     col1, col2, col3 = st.columns(3)
-    with col1:
-        st.info("🔵 **Tempo REAL Predominante**: 20% do tempo trabalhado remotamente")
-    with col2:
-        st.warning("🟢 **Tempo PREFERIDO Predominante**: 50% do tempo remoto")
-    with col3:
-        st.error("⚠️ **Lacuna**: 30% de diferença entre realidade e preferência")
-    
-    st.markdown("""
-    <div class="insight-box">
-    💡 **Insight Crítico**: Há uma demanda reprimida significativa - os trabalhadores gostariam de trabalhar 
-    muito mais remotamente do que efetivamente trabalham. Isso sugere oportunidade para empresas adotarem 
-    modelos mais flexíveis pós-pandemia.
-    </div>
-    """, unsafe_allow_html=True)
+
+    col1.metric("Respondentes", "3.019")
+    col2.metric("Variáveis", "73")
+    col3.metric("Período", "2020–2021")
 
 # ============================================================================
 # PÁGINA 2: ADOÇÃO DO TRABALHO REMOTO
 # ============================================================================
-elif pagina == "👥 Adoção do Trabalho Remoto":
+elif pagina == "Adoção do Trabalho Remoto":
     st.header("Adoção do Trabalho Remoto na Prática")
     
     st.markdown("""
@@ -220,7 +185,7 @@ elif pagina == "👥 Adoção do Trabalho Remoto":
     st.markdown("---")
     
     # Gráfico 1: Tempo real
-    st.subheader("⏱️ Tempo Real de Trabalho Remoto")
+    st.subheader("Tempo Real de Trabalho Remoto")
     st.markdown("_Percentual do tempo que os trabalhadores efetivamente trabalharam remotamente durante 2020-2021_")
     
     fig, ax = plt.subplots(figsize=(14, 8))
@@ -243,14 +208,14 @@ elif pagina == "👥 Adoção do Trabalho Remoto":
     # Insight 1
     principal_real = tempo_real.index[0]
     st.markdown(f"""
-    📌 **Resultado Principal**: A maioria dos trabalhadores (**{tempo_real.iloc[0]} respondentes**) 
+    **Resultado Principal**: A maioria dos trabalhadores (**{tempo_real.iloc[0]} respondentes**) 
     trabalhava **{principal_real}** remotamente, indicando adoção parcial durante a pandemia.
     """)
     
     st.markdown("---")
     
     # Gráfico 2: Tempo preferido
-    st.subheader("💚 Tempo Preferido de Trabalho Remoto")
+    st.subheader("Tempo Preferido de Trabalho Remoto")
     st.markdown("_Quanto tempo os trabalhadores gostariam de trabalhar remotamente_")
     
     fig, ax = plt.subplots(figsize=(14, 8))
@@ -272,14 +237,14 @@ elif pagina == "👥 Adoção do Trabalho Remoto":
     
     principal_pref = tempo_pref.index[0]
     st.markdown(f"""
-    📌 **Resultado Principal**: A preferência mais comum é **{principal_pref}** 
+    **Resultado Principal**: A preferência mais comum é **{principal_pref}** 
     (**{tempo_pref.iloc[0]} respondentes**), indicando forte demanda por trabalho mais flexível.
     """)
 
 # ============================================================================
 # PÁGINA 3: PRODUTIVIDADE
 # ============================================================================
-elif pagina == "💼 Produtividade Percebida":
+elif pagina == "Produtividade Percebida":
     st.header("Percepção de Produtividade no Trabalho Remoto")
     
     st.markdown("""
@@ -305,7 +270,7 @@ elif pagina == "💼 Produtividade Percebida":
         st.markdown(f"""
         <div style="background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); color: white; 
         padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h3>✅ Produtividade Positiva</h3>
+            <h3>Produtividade Positiva</h3>
             <h2>{pct_pos:.1f}%</h2>
             <p><strong>{int(positivos):,}</strong> respondentes relataram maior produtividade</p>
         </div>
