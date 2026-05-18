@@ -55,7 +55,14 @@ def load_data():
 # Carregar dados
 df = load_data()
 
+st.toast("Dados carregados com sucesso 📊")
+
 # SIDEBAR
+
+st.sidebar.markdown("""
+# 📊 Dashboard Analítico
+### Trabalho Remoto na Pandemia
+""")
 
 st.sidebar.title("Navegação")
 
@@ -109,23 +116,98 @@ st.sidebar.caption(
 st.markdown("""
 <style>
 
-h1 {
-    text-align: center;
-    color: #2c3e50;
+/* Fundo geral */
+.main {
+    background-color: #0f172a;
 }
 
-h2 {
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 5px;
+/* Texto padrão */
+html, body, [class*="css"]  {
+    color: #f1f5f9;
+    font-family: 'Segoe UI', sans-serif;
 }
 
+/* HERO */
+.hero {
+    padding: 2rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid #334155;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+}
+
+/* Headers */
+h2, h3 {
+    color: #f8fafc;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 0.3rem;
+}
+
+/* Métricas */
+[data-testid="metric-container"] {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #111827;
+}
+
+/* Insight box */
 .insight-box {
-    background: #ecf0f1;
-    color: #2c3e50;
-    padding: 15px;
-    border-left: 5px solid #3498db;
-    border-radius: 8px;
-    margin-top: 15px;
+    background: linear-gradient(135deg, #1e293b, #111827);
+    color: #f8fafc;
+    padding: 1.5rem;
+    border-left: 5px solid #38bdf8;
+    border-radius: 14px;
+    margin-top: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"] {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+/* Botões */
+.stButton>button {
+    border-radius: 12px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab"] {
+    font-size: 16px;
+}
+
+/* Espaçamento */
+.block-container {
+    padding-top: 2rem;
+}
+
+/* Linha horizontal */
+hr {
+    border-color: #334155;
 }
 
 </style>
@@ -133,7 +215,18 @@ h2 {
 
 # TITULO 
 
-st.title("Análise: Trabalho Remoto na Pandemia (2020-2021)")
+st.markdown("""
+<div class="hero">
+
+<h1>Trabalho Remoto na Pandemia</h1>
+
+<p>
+Análise interativa sobre produtividade, barreiras, benefícios
+e perspectivas do home office durante a COVID-19.
+</p>
+
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown(
     "Versão traduzida com contexto completo | 3.019 Respondentes | 73 Variáveis"
@@ -171,10 +264,10 @@ Esta pesquisa analisou como essa mudança impactou produtividade, motivação, b
 
     col1, col2, col3, col4 = st.columns(4)
 
-    col1.metric("Respondentes", f"{len(df):,}")
-    col2.metric("Variáveis", len(df.columns))
-    col3.metric("Escopo", "Global")
-    col4.metric("Período", "2020–2021")
+    col1.metric("👥 Respondentes", f"{len(df):,}")
+    col2.metric("📊 Variáveis", len(df.columns))
+    col3.metric("🌎 Escopo", "Global")
+    col4.metric("📅 Período", "2020–2021")
 
     st.markdown("---")
 
@@ -312,10 +405,18 @@ elif pagina == "Adoção do Trabalho Remoto":
                 text="Quantidade",
                 color="Quantidade",
                 title="Tempo Real Trabalhado Remotamente",
-                template="plotly_white"
+                template="plotly_dark"
             )
 
-            fig.update_layout(height=600)
+            fig.update_layout(
+                height=600,
+                paper_bgcolor="#0f172a",
+                plot_bgcolor="#0f172a",
+                font_color="white",
+                title_font_size=22,
+                title_x=0.05,
+                coloraxis_showscale=False
+            )
 
             st.plotly_chart(fig, use_container_width=True)
 
@@ -340,10 +441,18 @@ elif pagina == "Adoção do Trabalho Remoto":
                 text="Quantidade",
                 color="Quantidade",
                 title="Tempo Preferido de Trabalho Remoto",
-                template="plotly_white"
+                template="plotly_dark"
             )
 
-            fig.update_layout(height=600)
+            fig.update_layout(
+                height=600,
+                paper_bgcolor="#0f172a",
+                plot_bgcolor="#0f172a",
+                font_color="white",
+                title_font_size=22,
+                title_x=0.05,
+                coloraxis_showscale=False
+            )
 
             st.plotly_chart(fig, use_container_width=True)
 
@@ -390,10 +499,18 @@ elif pagina == "Produtividade Percebida":
             text="Quantidade",
             color="Quantidade",
             title="Percepção de Produtividade",
-            template="plotly_white"
+            template="plotly_dark"
         )
 
-        fig.update_layout(height=600)
+        fig.update_layout(
+            height=600,
+            paper_bgcolor="#0f172a",
+            plot_bgcolor="#0f172a",
+            font_color="white",
+            title_font_size=22,
+            title_x=0.05,
+            coloraxis_showscale=False
+        )
 
         st.plotly_chart(fig, use_container_width=True)
 
@@ -452,10 +569,18 @@ Principais obstáculos enfrentados pelos trabalhadores durante o trabalho remoto
             text="Frequência",
             color="Frequência",
             title="Principais Barreiras ao Trabalho Remoto",
-            template="plotly_white"
+            template="plotly_dark"
         )
 
-        fig.update_layout(height=700)
+        fig.update_layout(
+            height=700,
+            paper_bgcolor="#0f172a",
+            plot_bgcolor="#0f172a",
+            font_color="white",
+            title_font_size=22,
+            title_x=0.05,
+            coloraxis_showscale=False
+        )
 
         st.plotly_chart(fig, use_container_width=True)
 
@@ -526,10 +651,18 @@ Aspectos positivos mais valorizados pelos trabalhadores durante a pandemia.
             text="Frequência",
             color="Frequência",
             title="Benefícios Mais Valorizados",
-            template="plotly_white"
+            template="plotly_dark"
         )
 
-        fig.update_layout(height=600)
+        fig.update_layout(
+            height=600,
+            paper_bgcolor="#0f172a",
+            plot_bgcolor="#0f172a",
+            font_color="white",
+            title_font_size=22,
+            title_x=0.05,
+            coloraxis_showscale=False
+        )
 
         st.plotly_chart(fig, use_container_width=True)
 
@@ -578,11 +711,18 @@ Preferências futuras dos trabalhadores após o período crítico da pandemia.
             text="Quantidade",
             color="Quantidade",
             title="Preferências Futuras de Trabalho Remoto",
-            template="plotly_white"
-            
+            template="plotly_dark"
         )
 
-        fig.update_layout(height=600)
+        fig.update_layout(
+            height=600,
+            paper_bgcolor="#0f172a",
+            plot_bgcolor="#0f172a",
+            font_color="white",
+            title_font_size=22,
+            title_x=0.05,
+            coloraxis_showscale=False
+        )
 
         st.plotly_chart(fig, use_container_width=True)
 
