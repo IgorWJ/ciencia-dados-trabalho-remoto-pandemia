@@ -150,7 +150,7 @@ python -m venv .venv
 
 ### 3. Instalar Dependências
 ```bash
-pip install pandas matplotlib seaborn streamlit numpy
+pip install pandas matplotlib seaborn streamlit numpy plotly
 ```
 
 ### 4. Executar Tradução do Dataset (Primeiro Uso)
